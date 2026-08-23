@@ -5,21 +5,31 @@ import com.github.ringoame196_s_mcPlugin.events.Events
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
-    private val plugin = this
-	
-    override fun onEnable() {
-        super.onEnable()
-		
-        registerEvents()
-        // registerCommands()
-    }
-	
-    private fun registerEvents() {
-        server.pluginManager.registerEvents(Events(), plugin)
+    companion object {
+        // 外部クラスから Main.plugin でアクセスできるようにする
+        lateinit var plugin: Main
+            private set
     }
 
-    private fun registerCommands() {
-        val command = getCommand("command")
-        command?.setExecutor(Command())
+    override fun onEnable() {
+        super.onEnable()
+        plugin = this
+
+        val jumpItems =
+            listOf(
+                DoubleJumpBoots(),
+            )
+
+        registerEvents(jumpItems)
+        registerCommands(jumpItems)
+    }
+
+    private fun registerEvents(jumpItems: List<JumpItem>) {
+        server.pluginManager.registerEvents(Events(jumpItems), plugin)
+    }
+
+    private fun registerCommands(jumpItems: List<JumpItem>) {
+        val command = getCommand("sneak-jump")
+        command?.setExecutor(Command(jumpItems))
     }
 }
