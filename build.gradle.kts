@@ -41,27 +41,21 @@ configure<BukkitPluginDescription> {
     apiVersion = "1." + mcVersion.split(".")[1]
     author = "ringoame196_s_mcPlugin"
     website = "https://github.com/ringoame196-s-mcPlugin/Sneak-Jump"
-    /*
-    コマンド追加用
     commands {
-        register("test") {
-            description = "This is a test command!"
-            aliases = listOf("t")
-            permission = "testplugin.test"
-            usage = "Just run the command!"
+        register("sneak-jump") {
+            description = "Sneak-Jump's Command"
+            aliases = listOf("sjump")
+            permission = "sneak_jump.admin"
+            usage = "/sneak-jump <give> <id>"
         }
     }
-    */
 
-    /*
-    パーミッション追加用
     permissions {
-        register("test.test") {
-            description = "This is a test permission!"
+        register("sneak_jump.admin") {
+            description = "Sneak-Jump's Admin Permission"
             default = BukkitPluginDescription.Permission.Default.OP
         }
     }
-    */
 }
 
 tasks.withType<ShadowJar> {
