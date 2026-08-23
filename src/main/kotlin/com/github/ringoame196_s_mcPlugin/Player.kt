@@ -7,3 +7,10 @@ fun Player.jump(height: Double = 0.6) {
     velocity.y = height
     this.velocity = velocity
 }
+
+val Player.isGrounded: Boolean
+    get() {
+        val location = location.clone().subtract(0.0, 0.1, 0.0)
+        val block = location.block
+        return !block.isEmpty && !block.isLiquid
+    }

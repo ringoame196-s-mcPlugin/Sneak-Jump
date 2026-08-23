@@ -14,8 +14,7 @@ class DoubleJumpBoots : JumpItem, ToggleSneak {
         isSneaking: Boolean,
     ) {
         if (!isSneaking) return
-        val underfootBlock = player.location.add(0.0, -1.0, 0.0).block
-        if (!underfootBlock.isEmpty) return
+        if (player.isGrounded) return
         player.jump()
     }
 }
