@@ -10,14 +10,15 @@ class Main : JavaPlugin() {
         lateinit var plugin: Main
             private set
     }
-	
+
     override fun onEnable() {
         super.onEnable()
         plugin = this
 
-        val jumpItems = listOf(
-            DoubleJumpBoots()
-        )
+        val jumpItems =
+            listOf(
+                DoubleJumpBoots(),
+            )
 
         registerEvents(jumpItems)
         registerCommands(jumpItems)

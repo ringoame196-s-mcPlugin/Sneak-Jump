@@ -10,7 +10,12 @@ import org.bukkit.entity.Player
 class Command(jumpItems: List<JumpItem>) : CommandExecutor, TabCompleter {
     private val jumpItemMap: Map<String, JumpItem> = jumpItems.associateBy { it.id }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+    override fun onCommand(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>,
+    ): Boolean {
         if (args.isEmpty()) return false
         val subCommand = args[0]
         when (subCommand) {
@@ -21,20 +26,29 @@ class Command(jumpItems: List<JumpItem>) : CommandExecutor, TabCompleter {
         return true
     }
 
-    private fun giveCommand(sender: CommandSender, args: Array<out String>) {
+    private fun giveCommand(
+        sender: CommandSender,
+        args: Array<out String>,
+    ) {
         val itemId = args[1]
         val item = jumpItemMap[itemId]?.item ?: return
         if (sender !is Player) return
         sender.inventory.addItem(item)
     }
 
-    override fun onTabComplete(commandSender: CommandSender, command: Command, label: String, args: Array<out String>): MutableList<String>? {
+    override fun onTabComplete(
+        commandSender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>,
+    ): MutableList<String>? {
         return when (args.size) {
             1 -> mutableListOf(CommandConst.GIVE_COMMAND)
-            2 -> when (args[0]) {
-                CommandConst.GIVE_COMMAND -> jumpItemMap.keys.toMutableList()
-                else -> mutableListOf()
-            }
+            2 ->
+                when (args[0]) {
+                    CommandConst.GIVE_COMMAND -> jumpItemMap.keys.toMutableList()
+                    else -> mutableListOf()
+                }
             else -> mutableListOf()
         }
     }

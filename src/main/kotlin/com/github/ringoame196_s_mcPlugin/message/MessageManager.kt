@@ -7,9 +7,8 @@ import java.io.File
 import java.io.InputStreamReader
 
 class MessageManager(
-    private val plugin: JavaPlugin
+    private val plugin: JavaPlugin,
 ) {
-
     private val fileName = "messages.yml"
     private val file = File(plugin.dataFolder, fileName)
 
@@ -29,9 +28,10 @@ class MessageManager(
     fun reload() {
         messages = YamlConfiguration.loadConfiguration(file)
 
-        val defaults = plugin.getResource(fileName)?.use {
-            YamlConfiguration.loadConfiguration(InputStreamReader(it, Charsets.UTF_8))
-        } ?: return
+        val defaults =
+            plugin.getResource(fileName)?.use {
+                YamlConfiguration.loadConfiguration(InputStreamReader(it, Charsets.UTF_8))
+            } ?: return
 
         messages.setDefaults(defaults)
         messages.options().copyDefaults(true)
@@ -53,9 +53,8 @@ class MessageManager(
 
     fun get(
         path: String,
-        vararg placeholders: Pair<String, String>
+        vararg placeholders: Pair<String, String>,
     ): String {
-
         if (!messages.contains(path)) {
             if (warnedKeys.add(path)) {
                 plugin.logger.warning("Message key '$path' was not found.")

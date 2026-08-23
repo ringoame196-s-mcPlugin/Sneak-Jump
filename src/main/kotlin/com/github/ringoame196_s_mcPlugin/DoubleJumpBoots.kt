@@ -9,7 +9,10 @@ class DoubleJumpBoots : JumpItem, ToggleSneak {
     override val material: Material = Material.CHAINMAIL_BOOTS
     override val item: ItemStack = JumpItemManager.createItem(this)
 
-    override fun onPlayerToggleSneak(player: Player, isSneaking: Boolean) {
+    override fun onPlayerToggleSneak(
+        player: Player,
+        isSneaking: Boolean,
+    ) {
         if (!isSneaking) return
         val underfootBlock = player.location.add(0.0, -1.0, 0.0).block
         if (!underfootBlock.isEmpty) return
