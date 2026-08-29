@@ -5,7 +5,6 @@ import com.github.ringoame196_s_mcPlugin.JumpItem
 import com.github.ringoame196_s_mcPlugin.ToggleSneak
 import com.github.ringoame196_s_mcPlugin.isGrounded
 import com.github.ringoame196_s_mcPlugin.jump
-import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
