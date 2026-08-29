@@ -5,6 +5,7 @@ import com.github.ringoame196_s_mcPlugin.JumpItem
 import com.github.ringoame196_s_mcPlugin.ToggleSneak
 import com.github.ringoame196_s_mcPlugin.isGrounded
 import com.github.ringoame196_s_mcPlugin.jump
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -20,14 +21,15 @@ class Events(jumpItems: List<JumpItem>) : Listener {
         val boots = player.inventory.boots ?: return
         val jumpItem = jumpItemMap[boots.itemMeta.jump.id] ?: return
         if (jumpItem !is ToggleSneak) return
-        if (DoubleJumpManager.hasJumped(player)) {
+        if (!jumpItem.canJump(player, e.isSneaking)) return
+        if (!DoubleJumpManager.hasJumped(player)) {
+            jumpItem.jump(player)
+
+            if (player.gameMode == GameMode.CREATIVE) return
+            DoubleJumpManager.setJumped(player, true)
+        } else {
             sendCancelJump(player)
-            return
         }
-
-        jumpItem.onPlayerToggleSneak(player, e.isSneaking)
-
-        DoubleJumpManager.setJumped(player, true)
     }
 
     private fun sendCancelJump(player: Player) {

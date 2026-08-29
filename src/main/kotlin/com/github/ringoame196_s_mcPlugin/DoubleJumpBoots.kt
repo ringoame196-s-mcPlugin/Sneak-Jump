@@ -11,12 +11,15 @@ class DoubleJumpBoots : JumpItem, ToggleSneak {
     override val material: Material = Material.CHAINMAIL_BOOTS
     override val item: ItemStack = JumpItemManager.createItem(this)
 
-    override fun onPlayerToggleSneak(
+    override fun canJump(player: Player, isSneaking: Boolean): Boolean {
+        if (isSneaking) return false
+        if (player.isGrounded) return false
+        return true
+    }
+
+    override fun jump(
         player: Player,
-        isSneaking: Boolean,
     ) {
-        if (!isSneaking) return
-        if (player.isGrounded) return
         player.jump()
         playJumpEffect(player)
     }
