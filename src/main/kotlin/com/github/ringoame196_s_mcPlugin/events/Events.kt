@@ -5,13 +5,18 @@ import com.github.ringoame196_s_mcPlugin.JumpItem
 import com.github.ringoame196_s_mcPlugin.ToggleSneak
 import com.github.ringoame196_s_mcPlugin.isGrounded
 import com.github.ringoame196_s_mcPlugin.jump
+import com.github.ringoame196_s_mcPlugin.message.MessageKey
+import com.github.ringoame196_s_mcPlugin.message.MessageManager
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
 
-class Events(jumpItems: List<JumpItem>) : Listener {
+class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManager) : Listener {
     private val jumpItemMap: Map<String, JumpItem> = jumpItems.associateBy { it.id }
 
     @EventHandler
@@ -22,6 +27,7 @@ class Events(jumpItems: List<JumpItem>) : Listener {
         if (jumpItem !is ToggleSneak) return
         if (!jumpItem.canJump(player, e.isSneaking)) return
         if (!DoubleJumpManager.hasJumped(player)) {
+            sendJump(player)
             jumpItem.jump(player)
             DoubleJumpManager.setJumped(player, true)
         } else {
@@ -29,9 +35,21 @@ class Events(jumpItems: List<JumpItem>) : Listener {
         }
     }
 
+    private fun sendJump(player: Player) {
+        val message = messageManager.get(MessageKey.JUMP_MESSAGE)
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
+    }
+
+    private fun sendRecharged(player: Player) {
+        val message = messageManager.get(MessageKey.JUMP_RECHARGED_MESSAGE)
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
+    }
+
     private fun sendCancelJump(player: Player) {
-        val message = "ジャンプできません"
-        player.sendMessage(message)
+        val message = messageManager.get(MessageKey.NO_CAN_JUMP_MESSAGE)
+        val sound = Sound.BLOCK_NOTE_BLOCK_BELL
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
+        player.playSound(player, sound, 1f, 1f)
     }
 
     @EventHandler
@@ -40,6 +58,7 @@ class Events(jumpItems: List<JumpItem>) : Listener {
         if (!DoubleJumpManager.hasJumped(player)) return
         if (player.isGrounded) {
             DoubleJumpManager.setJumped(player, false)
+            sendRecharged(player)
         }
     }
 }

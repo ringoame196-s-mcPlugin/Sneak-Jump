@@ -2,6 +2,7 @@ package com.github.ringoame196_s_mcPlugin
 
 import com.github.ringoame196_s_mcPlugin.commands.Command
 import com.github.ringoame196_s_mcPlugin.events.Events
+import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
@@ -25,7 +26,8 @@ class Main : JavaPlugin() {
     }
 
     private fun registerEvents(jumpItems: List<JumpItem>) {
-        server.pluginManager.registerEvents(Events(jumpItems), plugin)
+        val messageManager = MessageManager(plugin)
+        server.pluginManager.registerEvents(Events(jumpItems, messageManager), plugin)
     }
 
     private fun registerCommands(jumpItems: List<JumpItem>) {
