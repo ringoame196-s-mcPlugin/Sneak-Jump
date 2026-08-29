@@ -24,8 +24,6 @@ class Events(jumpItems: List<JumpItem>) : Listener {
         if (!jumpItem.canJump(player, e.isSneaking)) return
         if (!DoubleJumpManager.hasJumped(player)) {
             jumpItem.jump(player)
-
-            if (player.gameMode == GameMode.CREATIVE) return
             DoubleJumpManager.setJumped(player, true)
         } else {
             sendCancelJump(player)
