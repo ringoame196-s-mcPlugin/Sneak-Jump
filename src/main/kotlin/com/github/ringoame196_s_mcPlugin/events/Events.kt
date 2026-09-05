@@ -56,6 +56,11 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
     fun onMove(e: PlayerMoveEvent) {
         val player = e.player
         if (!DoubleJumpManager.hasJumped(player)) return
+
+        val from = e.from
+        val to = e.to
+
+        if (from.y == to.y && from.blockX == to.blockX && from.blockZ == to.blockZ) return
         if (player.isGrounded) {
             DoubleJumpManager.setJumped(player, false)
             sendRecharged(player)
