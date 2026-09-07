@@ -1,15 +1,20 @@
 package com.github.ringoame196_s_mcPlugin
 
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Player
+import org.bukkit.inventory.CraftingRecipe
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.ShapelessRecipe
+import org.bukkit.plugin.Plugin
 
-class DoubleJumpBoots : JumpItem, ToggleSneak {
+class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
     override val id: String = "double_jump_boots"
-    override val material: Material = Material.CHAINMAIL_BOOTS
-    override val item: ItemStack = JumpItemManager.createItem(this)
+    override val material: Material = Material.LEATHER_BOOTS
+    override val item: ItemStack by lazy { JumpItemManager.createItem(this) }
+    override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
 
     override fun canJump(player: Player, isSneaking: Boolean): Boolean {
         if (isSneaking) return false
@@ -31,5 +36,13 @@ class DoubleJumpBoots : JumpItem, ToggleSneak {
         val sound = Sound.ENTITY_BAT_TAKEOFF
         world.spawnParticle(particle, location, 15, 0.2, 0.1, 0.2, 0.05)
         player.playSound(player, sound, 0.8f, 1.5f)
+    }
+
+    private fun createRecipe(plugin: Plugin): CraftingRecipe {
+        val key = NamespacedKey(plugin, "${id}_shapeless")
+        return ShapelessRecipe(key, item).apply {
+            addIngredient(Material.LEATHER_BOOTS)
+            addIngredient(Material.FEATHER)
+        }
     }
 }

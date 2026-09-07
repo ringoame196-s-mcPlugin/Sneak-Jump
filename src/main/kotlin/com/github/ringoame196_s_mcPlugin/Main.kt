@@ -18,11 +18,12 @@ class Main : JavaPlugin() {
 
         val jumpItems =
             listOf(
-                DoubleJumpBoots(),
+                DoubleJumpBoots(plugin),
             )
 
         registerEvents(jumpItems)
         registerCommands(jumpItems)
+        registerRecipes(jumpItems)
     }
 
     private fun registerEvents(jumpItems: List<JumpItem>) {
@@ -33,5 +34,9 @@ class Main : JavaPlugin() {
     private fun registerCommands(jumpItems: List<JumpItem>) {
         val command = getCommand("sneak-jump")
         command?.setExecutor(Command(jumpItems))
+    }
+
+    private fun registerRecipes(jumpItems: List<JumpItem>) {
+        RecipeManager.registerRecipes(jumpItems)
     }
 }
