@@ -32,10 +32,10 @@ class SneakJumpBoots(plugin: Plugin) : JumpItem, SneakHold {
     fun playJumpEffect(player: Player) {
         val world = player.world
         val location = player.location
-        val particle = Particle.CLOUD
-        val sound = Sound.ENTITY_BAT_TAKEOFF
+        val particle = Particle.SWEEP_ATTACK
+        val sound = Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR
         world.spawnParticle(particle, location, 15, 0.2, 0.1, 0.2, 0.05)
-        player.playSound(player, sound, 0.8f, 1.5f)
+        player.playSound(player, sound, 0.8f, 0.7f)
     }
 
     private fun createItem(): ItemStack {
