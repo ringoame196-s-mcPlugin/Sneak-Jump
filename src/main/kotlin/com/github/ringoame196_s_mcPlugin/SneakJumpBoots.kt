@@ -17,6 +17,9 @@ class SneakJumpBoots(plugin: Plugin) : JumpItem, SneakHold {
     override val material: Material = Material.LEATHER_BOOTS
     override val item: ItemStack by lazy { createItem() }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
+    override val particle = Particle.SWEEP_ATTACK
+    override val sound = Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR
+    override val soundPitch: Float = 0.7f
 
     override fun canJump(player: Player): Boolean {
         return player.isGrounded
@@ -26,16 +29,6 @@ class SneakJumpBoots(plugin: Plugin) : JumpItem, SneakHold {
         player: Player,
     ) {
         player.jump(1.2)
-        playJumpEffect(player)
-    }
-
-    fun playJumpEffect(player: Player) {
-        val world = player.world
-        val location = player.location
-        val particle = Particle.SWEEP_ATTACK
-        val sound = Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR
-        world.spawnParticle(particle, location, 15, 0.2, 0.1, 0.2, 0.05)
-        player.playSound(player, sound, 0.8f, 0.7f)
     }
 
     private fun createItem(): ItemStack {

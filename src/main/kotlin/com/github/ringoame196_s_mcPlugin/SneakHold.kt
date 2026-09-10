@@ -2,9 +2,6 @@ package com.github.ringoame196_s_mcPlugin
 
 import org.bukkit.entity.Player
 
-interface SneakHold {
+interface SneakHold : JumpBoots {
     fun canJump(player: Player): Boolean
-    fun jump(
-        player: Player
-    )
 }

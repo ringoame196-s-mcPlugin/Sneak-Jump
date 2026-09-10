@@ -17,6 +17,9 @@ class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
     override val material: Material = Material.LEATHER_BOOTS
     override val item: ItemStack by lazy { createItem() }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
+    override val particle = Particle.CLOUD
+    override val sound = Sound.ENTITY_BAT_TAKEOFF
+    override val soundPitch = 1.5f
 
     override fun canJump(player: Player, isSneaking: Boolean): Boolean {
         if (isSneaking) return false
@@ -28,16 +31,6 @@ class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
         player: Player,
     ) {
         player.jump()
-        playJumpEffect(player)
-    }
-
-    fun playJumpEffect(player: Player) {
-        val world = player.world
-        val location = player.location
-        val particle = Particle.CLOUD
-        val sound = Sound.ENTITY_BAT_TAKEOFF
-        world.spawnParticle(particle, location, 15, 0.2, 0.1, 0.2, 0.05)
-        player.playSound(player, sound, 0.8f, 1.5f)
     }
 
     private fun createItem(): ItemStack {
