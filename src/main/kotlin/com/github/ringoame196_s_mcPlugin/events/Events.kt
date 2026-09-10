@@ -40,6 +40,8 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
     private fun sendJump(player: Player) {
         val message = messageManager.get(MessageKey.JUMP_MESSAGE)
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
+        player.sendActionBar(message)
+    }
     }
 
     private fun sendRecharged(player: Player) {
