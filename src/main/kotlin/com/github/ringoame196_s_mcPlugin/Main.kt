@@ -2,6 +2,7 @@ package com.github.ringoame196_s_mcPlugin
 
 import com.github.ringoame196_s_mcPlugin.commands.Command
 import com.github.ringoame196_s_mcPlugin.events.Events
+import com.github.ringoame196_s_mcPlugin.events.SneakHoldDetector
 import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -19,6 +20,7 @@ class Main : JavaPlugin() {
         val jumpItems =
             listOf(
                 DoubleJumpBoots(plugin),
+                SneakJumpBoots(plugin)
             )
 
         registerEvents(jumpItems)
@@ -28,7 +30,9 @@ class Main : JavaPlugin() {
 
     private fun registerEvents(jumpItems: List<JumpItem>) {
         val messageManager = MessageManager(plugin)
+        val sneakHoldDetector = SneakHoldDetector(plugin, 10L)
         server.pluginManager.registerEvents(Events(jumpItems, messageManager), plugin)
+        server.pluginManager.registerEvents(sneakHoldDetector, this)
     }
 
     private fun registerCommands(jumpItems: List<JumpItem>) {
