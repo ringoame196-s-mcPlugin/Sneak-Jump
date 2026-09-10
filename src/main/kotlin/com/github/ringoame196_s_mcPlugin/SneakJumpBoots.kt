@@ -12,31 +12,29 @@ import org.bukkit.inventory.ShapelessRecipe
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.plugin.Plugin
 
-class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
-    override val id: String = "double_jump_boots"
+class SneakJumpBoots(plugin: Plugin) : JumpItem, SneakHold {
+    override val id: String = "sneak_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val item: ItemStack by lazy { createItem() }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
-    override val particle = Particle.CLOUD
-    override val sound = Sound.ENTITY_BAT_TAKEOFF
-    override val soundPitch = 1.5f
+    override val particle = Particle.SWEEP_ATTACK
+    override val sound = Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR
+    override val soundPitch: Float = 0.7f
 
-    override fun canJump(player: Player, isSneaking: Boolean): Boolean {
-        if (isSneaking) return false
-        if (player.isGrounded) return false
-        return true
+    override fun canJump(player: Player): Boolean {
+        return player.isGrounded
     }
 
     override fun jump(
         player: Player,
     ) {
-        player.jump()
+        player.jump(1.2)
     }
 
     private fun createItem(): ItemStack {
         val item = JumpItemManager.createItem(this)
         val meta = item.itemMeta as LeatherArmorMeta
-        meta.setColor(Color.WHITE)
+        meta.setColor(Color.BLUE)
         item.setItemMeta(meta)
         return item
     }
@@ -45,7 +43,7 @@ class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
         val key = NamespacedKey(plugin, "${id}_shapeless")
         return ShapelessRecipe(key, item).apply {
             addIngredient(Material.LEATHER_BOOTS)
-            addIngredient(Material.FEATHER)
+            addIngredient(Material.GUNPOWDER)
         }
     }
 }

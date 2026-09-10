@@ -1,7 +1,10 @@
 package com.github.ringoame196_s_mcPlugin.events
 
 import com.github.ringoame196_s_mcPlugin.DoubleJumpManager
+import com.github.ringoame196_s_mcPlugin.JumpBoots
 import com.github.ringoame196_s_mcPlugin.JumpItem
+import com.github.ringoame196_s_mcPlugin.PlayerSneakHoldEvent
+import com.github.ringoame196_s_mcPlugin.SneakHold
 import com.github.ringoame196_s_mcPlugin.ToggleSneak
 import com.github.ringoame196_s_mcPlugin.isGrounded
 import com.github.ringoame196_s_mcPlugin.jump
@@ -29,7 +32,23 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (!DoubleJumpManager.hasJumped(player)) {
             sendJump(player)
             jumpItem.jump(player)
+            playJumpEffect(player, jumpItem)
             DoubleJumpManager.setJumped(player, true)
+        } else {
+            sendCancelJump(player)
+        }
+    }
+
+    @EventHandler
+    fun onSneakHold(e: PlayerSneakHoldEvent) {
+        val player = e.player
+        val boots = player.inventory.boots ?: return
+        val jumpItem = jumpItemMap[boots.itemMeta.jump.id] ?: return
+        if (jumpItem !is SneakHold) return
+        if (jumpItem.canJump(player)) {
+            sendJump(player)
+            jumpItem.jump(player)
+            playJumpEffect(player, jumpItem)
         } else {
             sendCancelJump(player)
         }
@@ -37,7 +56,19 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
 
     private fun sendJump(player: Player) {
         val message = messageManager.get(MessageKey.JUMP_MESSAGE)
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
+        player.sendActionBar(message)
+    }
+
+    private fun playJumpEffect(player: Player, jumpBoots: JumpBoots) {
+        val world = player.world
+        val location = player.location
+        val particle = jumpBoots.particle
+        val particleCount = jumpBoots.particleCount
+        val sound = jumpBoots.sound
+        val volume = jumpBoots.soundVolume
+        val pitch = jumpBoots.soundPitch
+        world.spawnParticle(particle, location, particleCount, 0.2, 0.1, 0.2, 0.05)
+        player.playSound(player, sound, volume, pitch)
     }
 
     private fun sendRecharged(player: Player) {
