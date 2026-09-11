@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
 
 class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManager) : Listener {
@@ -107,5 +108,14 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (e.cause == EntityDamageEvent.DamageCause.FALL) {
             e.isCancelled = true
         }
+    }
+
+    @EventHandler
+    fun onToggleFlight(e: PlayerToggleFlightEvent) {
+        val player = e.player
+
+        if (!DoubleJumpManager.hasJumped(player)) return
+        DoubleJumpManager.setJumped(player, false)
+        sendRecharged(player)
     }
 }
