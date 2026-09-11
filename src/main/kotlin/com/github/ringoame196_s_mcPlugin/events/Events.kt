@@ -16,6 +16,7 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
 
@@ -95,6 +96,16 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (player.isGrounded) {
             DoubleJumpManager.setJumped(player, false)
             sendRecharged(player)
+        }
+    }
+
+    @EventHandler
+    fun onEntityDamage(e: EntityDamageEvent) {
+        val player = e.entity as? Player ?: return
+        val boots = player.inventory.boots ?: return
+        jumpItemMap[boots.itemMeta.jump.id] ?: return
+        if (e.cause == EntityDamageEvent.DamageCause.FALL) {
+            e.isCancelled = true
         }
     }
 }
