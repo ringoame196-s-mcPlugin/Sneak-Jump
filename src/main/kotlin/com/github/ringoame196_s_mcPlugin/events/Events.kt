@@ -16,8 +16,12 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.inventory.PrepareItemCraftEvent
 import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
+import org.bukkit.inventory.meta.Damageable
 
 class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManager) : Listener {
     private val jumpItemMap: Map<String, JumpItem> = jumpItems.associateBy { it.id }
@@ -95,6 +99,45 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (player.isGrounded) {
             DoubleJumpManager.setJumped(player, false)
             sendRecharged(player)
+        }
+    }
+
+    @EventHandler
+    fun onEntityDamage(e: EntityDamageEvent) {
+        val player = e.entity as? Player ?: return
+        val boots = player.inventory.boots ?: return
+        jumpItemMap[boots.itemMeta.jump.id] ?: return
+        if (e.cause == EntityDamageEvent.DamageCause.FALL) {
+            e.isCancelled = true
+        }
+    }
+
+    @EventHandler
+    fun onToggleFlight(e: PlayerToggleFlightEvent) {
+        val player = e.player
+
+        if (!DoubleJumpManager.hasJumped(player)) return
+        DoubleJumpManager.setJumped(player, false)
+        sendRecharged(player)
+    }
+
+    @EventHandler
+    fun onPrepareItemCraft(e: PrepareItemCraftEvent) {
+        val recipe = e.recipe ?: return
+        val result = recipe.result
+
+        val resultMeta = result.itemMeta ?: return
+        val jumpId = resultMeta.jump.id ?: return
+
+        val ingredients = e.inventory.matrix.filterNotNull().filter { !it.type.isAir }
+
+        for (item in ingredients) {
+            val meta = item.itemMeta as? Damageable ?: continue
+
+            if (meta.hasDamage() && meta.damage > 0) {
+                e.inventory.result = null
+                return
+            }
         }
     }
 }
