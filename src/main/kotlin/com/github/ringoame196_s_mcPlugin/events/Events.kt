@@ -17,9 +17,11 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.inventory.PrepareItemCraftEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
+import org.bukkit.inventory.meta.Damageable
 
 class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManager) : Listener {
     private val jumpItemMap: Map<String, JumpItem> = jumpItems.associateBy { it.id }
@@ -117,5 +119,25 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (!DoubleJumpManager.hasJumped(player)) return
         DoubleJumpManager.setJumped(player, false)
         sendRecharged(player)
+    }
+
+    @EventHandler
+    fun onPrepareItemCraft(e: PrepareItemCraftEvent) {
+        val recipe = e.recipe ?: return
+        val result = recipe.result
+
+        val resultMeta = result.itemMeta ?: return
+        val jumpId = resultMeta.jump.id ?: return
+
+        val ingredients = e.inventory.matrix.filterNotNull().filter { !it.type.isAir }
+
+        for (item in ingredients) {
+            val meta = item.itemMeta as? Damageable ?: continue
+
+            if (meta.hasDamage() && meta.damage > 0) {
+                e.inventory.result = null
+                return
+            }
+        }
     }
 }
