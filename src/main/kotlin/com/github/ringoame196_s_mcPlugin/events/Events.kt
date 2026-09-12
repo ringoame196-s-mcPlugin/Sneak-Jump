@@ -44,13 +44,14 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (player.isFlying) return
         if (jumpItem !is T) return
         if (!jumpItem.isAction(player)) return
-        if (jumpItem.canJump(player)) {
-            sendJump(player)
-            jumpItem.jump(player)
-            playJumpEffect(player, jumpItem)
-        } else {
+        if (jumpItem.isCancel(player)) {
             sendCancelJump(player)
+            return
         }
+
+        sendJump(player)
+        jumpItem.jump(player)
+        playJumpEffect(player, jumpItem)
     }
 
     private fun sendJump(player: Player) {

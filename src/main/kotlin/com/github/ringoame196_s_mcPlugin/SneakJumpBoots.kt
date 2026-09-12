@@ -21,8 +21,8 @@ class SneakJumpBoots(plugin: Plugin) : JumpItem, SneakHold {
     override val sound = Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR
     override val soundPitch: Float = 0.7f
 
-    override fun canJump(player: Player): Boolean {
-        return player.isGrounded
+    override fun isCancel(player: Player): Boolean {
+        return !player.isGrounded
     }
 
     override fun jump(
