@@ -15,4 +15,7 @@ interface JumpBoots {
     fun jump(
         player: Player
     )
+
+    fun isAction(player: Player): Boolean = true
+    fun canJump(player: Player): Boolean
 }

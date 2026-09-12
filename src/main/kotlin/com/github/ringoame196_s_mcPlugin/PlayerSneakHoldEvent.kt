@@ -2,10 +2,10 @@ package com.github.ringoame196_s_mcPlugin
 
 import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
-import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
+import org.bukkit.event.player.PlayerEvent
 
-class PlayerSneakHoldEvent(val player: Player, val holdTimeTicks: Long) : Event(), Cancellable {
+class PlayerSneakHoldEvent(player: Player, val holdTimeTicks: Long) : Cancellable, PlayerEvent(player) {
     private var isCancelled = false
 
     override fun isCancelled(): Boolean = isCancelled
