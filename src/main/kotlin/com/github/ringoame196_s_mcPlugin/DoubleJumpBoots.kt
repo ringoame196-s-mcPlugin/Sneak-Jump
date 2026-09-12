@@ -21,8 +21,12 @@ class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
     override val sound = Sound.ENTITY_BAT_TAKEOFF
     override val soundPitch = 1.5f
 
-    override fun canJump(player: Player, isSneaking: Boolean): Boolean {
-        if (isSneaking) return false
+    override fun canJump(player: Player): Boolean {
+        return !DoubleJumpManager.hasJumped(player)
+    }
+
+    override fun isAction(player: Player): Boolean {
+        if (player.isSneaking) return false
         if (player.isGrounded) return false
         return true
     }
@@ -31,6 +35,7 @@ class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
         player: Player,
     ) {
         player.jump()
+        DoubleJumpManager.setJumped(player, true)
     }
 
     private fun createItem(): ItemStack {

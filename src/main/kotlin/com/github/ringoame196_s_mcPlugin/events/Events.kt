@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.inventory.PrepareItemCraftEvent
+import org.bukkit.event.player.PlayerEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
@@ -28,27 +29,21 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
 
     @EventHandler
     fun onPlayerToggleSneak(e: PlayerToggleSneakEvent) {
-        val player = e.player
-        val boots = player.inventory.boots ?: return
-        val jumpItem = jumpItemMap[boots.itemMeta.jump.id] ?: return
-        if (jumpItem !is ToggleSneak) return
-        if (!jumpItem.canJump(player, e.isSneaking)) return
-        if (!DoubleJumpManager.hasJumped(player)) {
-            sendJump(player)
-            jumpItem.jump(player)
-            playJumpEffect(player, jumpItem)
-            DoubleJumpManager.setJumped(player, true)
-        } else {
-            sendCancelJump(player)
-        }
+        activationJump<ToggleSneak>(e)
     }
 
     @EventHandler
     fun onSneakHold(e: PlayerSneakHoldEvent) {
+        activationJump<SneakHold>(e)
+    }
+
+    private inline fun <reified T : JumpBoots> activationJump(e: PlayerEvent) {
         val player = e.player
         val boots = player.inventory.boots ?: return
         val jumpItem = jumpItemMap[boots.itemMeta.jump.id] ?: return
-        if (jumpItem !is SneakHold) return
+        if (player.isFlying) return
+        if (jumpItem !is T) return
+        if (!jumpItem.isAction(player)) return
         if (jumpItem.canJump(player)) {
             sendJump(player)
             jumpItem.jump(player)
