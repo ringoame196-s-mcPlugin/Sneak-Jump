@@ -1,0 +1,11 @@
+enable-crafting: true
+
+names:
+  double_jump_boots: "&b&lDouble Jump Boots"
+  sneak_jump_boots: "&a&lSneak Jump Boots"
+  tnt_jump_boots: "&c&lTNT Jump Boots"
+
+# names:
+  # double_jump_boots: "&b&l二段ジャンプのブーツ"
+  # sneak_jump_boots: "&a&lスニークジャンプのブーツ"
+  # tnt_jump_boots: "&c&lTNTジャンプのブーツ"
