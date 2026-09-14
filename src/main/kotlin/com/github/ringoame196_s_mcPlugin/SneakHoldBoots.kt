@@ -1,3 +1,3 @@
 package com.github.ringoame196_s_mcPlugin
 
-interface ToggleSneak : JumpBoots
+interface SneakHoldBoots : JumpBoots

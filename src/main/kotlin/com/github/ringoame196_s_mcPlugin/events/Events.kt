@@ -4,8 +4,8 @@ import com.github.ringoame196_s_mcPlugin.DoubleJumpManager
 import com.github.ringoame196_s_mcPlugin.JumpBoots
 import com.github.ringoame196_s_mcPlugin.JumpItem
 import com.github.ringoame196_s_mcPlugin.PlayerSneakHoldEvent
-import com.github.ringoame196_s_mcPlugin.SneakHold
-import com.github.ringoame196_s_mcPlugin.ToggleSneak
+import com.github.ringoame196_s_mcPlugin.SneakHoldBoots
+import com.github.ringoame196_s_mcPlugin.ToggleSneakBoots
 import com.github.ringoame196_s_mcPlugin.isGrounded
 import com.github.ringoame196_s_mcPlugin.jump
 import com.github.ringoame196_s_mcPlugin.message.MessageKey
@@ -29,12 +29,12 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
 
     @EventHandler
     fun onPlayerToggleSneak(e: PlayerToggleSneakEvent) {
-        activationJump<ToggleSneak>(e)
+        activationJump<ToggleSneakBoots>(e)
     }
 
     @EventHandler
     fun onSneakHold(e: PlayerSneakHoldEvent) {
-        activationJump<SneakHold>(e)
+        activationJump<SneakHoldBoots>(e)
     }
 
     private inline fun <reified T : JumpBoots> activationJump(e: PlayerEvent) {
