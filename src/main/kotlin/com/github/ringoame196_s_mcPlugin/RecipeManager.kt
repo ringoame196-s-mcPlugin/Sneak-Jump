@@ -14,4 +14,13 @@ object RecipeManager {
             Bukkit.addRecipe(recipe)
         }
     }
+
+    fun removeRecipes(jumpItems: List<JumpItem>) {
+        for (jumpItem in jumpItems) {
+            val recipe = jumpItem.recipe ?: continue
+            if (Bukkit.getRecipe(recipe.key) != null) {
+                Bukkit.removeRecipe(recipe.key)
+            }
+        }
+    }
 }

@@ -1,10 +1,12 @@
 package com.github.ringoame196_s_mcPlugin
 
+import org.bukkit.Color
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 
-interface JumpBoots {
+interface JumpBoots : JumpItem {
+    val color: Color
     val particle: Particle
     val particleCount: Int get() = 15
 

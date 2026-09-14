@@ -9,13 +9,13 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.CraftingRecipe
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
-import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.plugin.Plugin
 
-class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
+class DoubleJump(plugin: Plugin) : ToggleSneak, JumpBoots {
     override val id: String = "double_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
-    override val item: ItemStack by lazy { createItem() }
+    override val color: Color = Color.WHITE
+    override val item: ItemStack by lazy { JumpItemManager.createBoots(this) }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
     override val particle = Particle.CLOUD
     override val sound = Sound.ENTITY_BAT_TAKEOFF
@@ -36,14 +36,6 @@ class DoubleJumpBoots(plugin: Plugin) : JumpItem, ToggleSneak {
     ) {
         player.jump()
         DoubleJumpManager.setJumped(player, true)
-    }
-
-    private fun createItem(): ItemStack {
-        val item = JumpItemManager.createItem(this)
-        val meta = item.itemMeta as LeatherArmorMeta
-        meta.setColor(Color.WHITE)
-        item.setItemMeta(meta)
-        return item
     }
 
     private fun createRecipe(plugin: Plugin): CraftingRecipe {

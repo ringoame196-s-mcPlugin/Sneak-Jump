@@ -1,5 +1,6 @@
 package com.github.ringoame196_s_mcPlugin.events
 
+import com.github.ringoame196_s_mcPlugin.BootsEvent
 import com.github.ringoame196_s_mcPlugin.DoubleJumpManager
 import com.github.ringoame196_s_mcPlugin.JumpBoots
 import com.github.ringoame196_s_mcPlugin.JumpItem
@@ -37,10 +38,11 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         activationJump<SneakHold>(e)
     }
 
-    private inline fun <reified T : JumpBoots> activationJump(e: PlayerEvent) {
+    private inline fun <reified T : BootsEvent> activationJump(e: PlayerEvent) {
         val player = e.player
         val boots = player.inventory.boots ?: return
         val jumpItem = jumpItemMap[boots.itemMeta.jump.id] ?: return
+        if (jumpItem !is JumpBoots) return
         if (player.isFlying) return
         if (jumpItem !is T) return
         if (!jumpItem.isAction(player)) return
