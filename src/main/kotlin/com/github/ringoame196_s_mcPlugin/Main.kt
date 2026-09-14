@@ -17,15 +17,20 @@ class Main : JavaPlugin() {
         super.onEnable()
         plugin = this
 
+        saveDefaultConfig()
+        val configManager = ConfigManager(plugin.config)
+        JumpItemManager.configManager = configManager
+
         val jumpItems =
             listOf(
                 DoubleJumpBoots(plugin),
-                SneakJumpBoots(plugin)
+                SneakJumpBoots(plugin),
+                TNTJumpBoots(plugin)
             )
 
         registerEvents(jumpItems)
         registerCommands(jumpItems)
-        registerRecipes(jumpItems)
+        registerRecipes(jumpItems, configManager)
     }
 
     private fun registerEvents(jumpItems: List<JumpItem>) {
@@ -40,7 +45,11 @@ class Main : JavaPlugin() {
         command?.setExecutor(Command(jumpItems))
     }
 
-    private fun registerRecipes(jumpItems: List<JumpItem>) {
-        RecipeManager.registerRecipes(jumpItems)
+    private fun registerRecipes(jumpItems: List<JumpItem>, configManager: ConfigManager) {
+        if (configManager.isCraftingEnabled) {
+            RecipeManager.registerRecipes(jumpItems)
+        } else {
+            RecipeManager.removeRecipes(jumpItems)
+        }
     }
 }
