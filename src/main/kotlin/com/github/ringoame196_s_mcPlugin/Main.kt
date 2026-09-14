@@ -23,9 +23,9 @@ class Main : JavaPlugin() {
 
         val jumpItems =
             listOf(
-                DoubleJumpBoots(plugin),
-                SneakJumpBoots(plugin),
-                TNTJumpBoots(plugin)
+                DoubleJump(plugin),
+                SneakJump(plugin),
+                TNTJump(plugin)
             )
 
         registerEvents(jumpItems)

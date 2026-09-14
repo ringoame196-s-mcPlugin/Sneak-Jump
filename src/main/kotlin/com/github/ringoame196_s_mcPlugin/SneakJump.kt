@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
 import org.bukkit.plugin.Plugin
 
-class SneakJumpBoots(plugin: Plugin) : SneakHoldBoots {
+class SneakJump(plugin: Plugin) : SneakHold, JumpBoots {
     override val id: String = "sneak_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val color: Color = Color.BLUE

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
 import org.bukkit.plugin.Plugin
 
-class DoubleJumpBoots(plugin: Plugin) : ToggleSneakBoots, JumpBoots {
+class DoubleJump(plugin: Plugin) : ToggleSneak, JumpBoots {
     override val id: String = "double_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val color: Color = Color.WHITE
