@@ -25,6 +25,10 @@ class SneakJump(plugin: Plugin) : SneakHold, JumpBoots {
         return !player.isGrounded
     }
 
+    override fun onSneakHold(player: Player) {
+        jump(player)
+    }
+
     override fun jump(
         player: Player,
     ) {

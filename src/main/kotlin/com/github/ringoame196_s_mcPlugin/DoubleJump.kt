@@ -31,6 +31,10 @@ class DoubleJump(plugin: Plugin) : ToggleSneak, JumpBoots {
         return true
     }
 
+    override fun onToggleSneak(player: Player) {
+        jump(player)
+    }
+
     override fun jump(
         player: Player,
     ) {

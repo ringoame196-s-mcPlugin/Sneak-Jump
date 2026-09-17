@@ -1,6 +1,7 @@
 package com.github.ringoame196_s_mcPlugin.events
 
 import com.github.ringoame196_s_mcPlugin.BootsEvent
+import com.github.ringoame196_s_mcPlugin.ChargeBoots
 import com.github.ringoame196_s_mcPlugin.DoubleJumpManager
 import com.github.ringoame196_s_mcPlugin.JumpBoots
 import com.github.ringoame196_s_mcPlugin.JumpItem
@@ -19,7 +20,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.inventory.PrepareItemCraftEvent
-import org.bukkit.event.player.PlayerEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerToggleFlightEvent
 import org.bukkit.event.player.PlayerToggleSneakEvent
@@ -30,30 +30,43 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
 
     @EventHandler
     fun onPlayerToggleSneak(e: PlayerToggleSneakEvent) {
-        activationJump<ToggleSneak>(e)
+        activationJump<ToggleSneak>(e.player) { boots ->
+            boots.onToggleSneak(e.player)
+        }
     }
 
     @EventHandler
     fun onSneakHold(e: PlayerSneakHoldEvent) {
-        activationJump<SneakHold>(e)
+        activationJump<SneakHold>(e.player) { boots ->
+            boots.onSneakHold(e.player)
+        }
     }
 
-    private inline fun <reified T : BootsEvent> activationJump(e: PlayerEvent) {
-        val player = e.player
+    private inline fun <reified T : BootsEvent> activationJump(
+        player: Player,
+        action: (T) -> Unit
+    ) {
         val boots = player.inventory.boots ?: return
         val jumpItem = jumpItemMap[boots.itemMeta.jump.id] ?: return
         if (jumpItem !is JumpBoots) return
         if (player.isFlying) return
-        if (jumpItem !is T) return
+        if (jumpItem !is T) return // インターフェースの型チェック
         if (!jumpItem.isAction(player)) return
+
         if (jumpItem.isCancel(player)) {
             sendCancelJump(player)
             return
         }
 
-        sendJump(player)
-        jumpItem.jump(player)
-        playJumpEffect(player, jumpItem)
+        // チャージ可能な場合の共通分岐
+        if (jumpItem is ChargeBoots && jumpItem.isCharge(player)) {
+            jumpItem.charge(player)
+            playChargeEffect(player, jumpItem)
+        } else {
+            sendJump(player)
+            action(jumpItem) // ★ イベント固有の処理を実行！
+            playJumpEffect(player, jumpItem)
+        }
     }
 
     private fun sendJump(player: Player) {
@@ -70,6 +83,13 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         val volume = jumpBoots.soundVolume
         val pitch = jumpBoots.soundPitch
         world.spawnParticle(particle, location, particleCount, 0.2, 0.1, 0.2, 0.05)
+        player.playSound(player, sound, volume, pitch)
+    }
+
+    private fun playChargeEffect(player: Player, chargeBoots: ChargeBoots) {
+        val sound = chargeBoots.chargeSound
+        val volume = chargeBoots.chargeSoundVolume
+        val pitch = chargeBoots.chargeSoundPitch
         player.playSound(player, sound, volume, pitch)
     }
 
