@@ -21,7 +21,6 @@ class TNTJump(plugin: Plugin) : ToggleSneak, JumpBoots, ChargeBoots {
     override val particle = Particle.CLOUD
     override val sound = Sound.ENTITY_GENERIC_EXPLODE
     override val soundPitch = 1.5f
-    override val chargeSound = Sound.ENTITY_CREEPER_DEATH
     private val actionCount = 5
 
     companion object {
