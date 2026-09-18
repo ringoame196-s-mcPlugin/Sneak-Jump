@@ -1,10 +1,11 @@
 package com.github.ringoame196_s_mcPlugin.events
 
+import com.destroystokyo.paper.event.player.PlayerJumpEvent
 import com.github.ringoame196_s_mcPlugin.BootsEvent
-import com.github.ringoame196_s_mcPlugin.ChargeBoots
 import com.github.ringoame196_s_mcPlugin.DoubleJumpManager
 import com.github.ringoame196_s_mcPlugin.JumpBoots
 import com.github.ringoame196_s_mcPlugin.JumpItem
+import com.github.ringoame196_s_mcPlugin.PlayerJump
 import com.github.ringoame196_s_mcPlugin.PlayerSneakHoldEvent
 import com.github.ringoame196_s_mcPlugin.SneakHold
 import com.github.ringoame196_s_mcPlugin.ToggleSneak
@@ -16,6 +17,7 @@ import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Sound
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
@@ -30,20 +32,28 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
 
     @EventHandler
     fun onPlayerToggleSneak(e: PlayerToggleSneakEvent) {
-        activationJump<ToggleSneak>(e.player) { boots ->
+        activationJump<ToggleSneak>(e.player, e) { boots ->
             boots.onToggleSneak(e.player)
         }
     }
 
     @EventHandler
     fun onSneakHold(e: PlayerSneakHoldEvent) {
-        activationJump<SneakHold>(e.player) { boots ->
+        activationJump<SneakHold>(e.player, e) { boots ->
             boots.onSneakHold(e.player)
+        }
+    }
+
+    @EventHandler
+    fun onPlayerJump(e: PlayerJumpEvent) {
+        activationJump<PlayerJump>(e.player, e) { boots ->
+            boots.onPlayerJump(e.player)
         }
     }
 
     private inline fun <reified T : BootsEvent> activationJump(
         player: Player,
+        e: Event,
         action: (T) -> Unit
     ) {
         val boots = player.inventory.boots ?: return
@@ -51,22 +61,16 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (jumpItem !is JumpBoots) return
         if (player.isFlying) return
         if (jumpItem !is T) return // インターフェースの型チェック
-        if (!jumpItem.isAction(player)) return
+        if (!jumpItem.isAction(player, e)) return
 
-        if (jumpItem.isCancel(player)) {
+        if (jumpItem.isCancel(player) || jumpItem.isCancel(player, e)) {
             sendCancelJump(player)
             return
         }
 
-        // チャージ可能な場合の共通分岐
-        if (jumpItem is ChargeBoots && jumpItem.isCharge(player)) {
-            jumpItem.charge(player)
-            jumpItem.playChargeEffect(player)
-        } else {
-            sendJump(player)
-            action(jumpItem)
-            jumpItem.playJumpEffect(player)
-        }
+        sendJump(player)
+        action(jumpItem)
+        jumpItem.playJumpEffect(player)
     }
 
     private fun sendJump(player: Player) {

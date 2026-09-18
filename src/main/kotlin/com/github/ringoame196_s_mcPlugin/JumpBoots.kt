@@ -4,6 +4,7 @@ import org.bukkit.Color
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 
 interface JumpBoots : JumpItem {
     val color: Color
@@ -30,6 +31,6 @@ interface JumpBoots : JumpItem {
         player.playSound(player, sound, volume, pitch)
     }
 
-    fun isAction(player: Player): Boolean = true
-    fun isCancel(player: Player): Boolean = false
+    fun isAction(player: Player, e: Event? = null): Boolean = true
+    fun isCancel(player: Player, e: Event? = null): Boolean = false
 }

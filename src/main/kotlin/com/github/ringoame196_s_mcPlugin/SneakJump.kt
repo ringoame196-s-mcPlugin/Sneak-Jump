@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.inventory.CraftingRecipe
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
@@ -21,7 +22,7 @@ class SneakJump(plugin: Plugin) : SneakHold, JumpBoots {
     override val sound = Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR
     override val soundPitch: Float = 0.7f
 
-    override fun isCancel(player: Player): Boolean {
+    override fun isCancel(player: Player, e: Event?): Boolean {
         return !player.isGrounded
     }
 
