@@ -8,6 +8,13 @@ interface ChargeBoots {
     val chargeSoundVolume: Float get() = 1.0f
     val chargeSoundPitch: Float get() = 1.0f
 
+    fun playChargeEffect(player: Player) {
+        val sound = this.chargeSound
+        val volume = this.chargeSoundVolume
+        val pitch = this.chargeSoundPitch
+        player.playSound(player, sound, volume, pitch)
+    }
+
     fun isCharge(player: Player): Boolean
     fun charge(player: Player)
 }

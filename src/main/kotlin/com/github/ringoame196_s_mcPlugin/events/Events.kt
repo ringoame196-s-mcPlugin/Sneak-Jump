@@ -61,36 +61,17 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         // チャージ可能な場合の共通分岐
         if (jumpItem is ChargeBoots && jumpItem.isCharge(player)) {
             jumpItem.charge(player)
-            playChargeEffect(player, jumpItem)
+            jumpItem.playChargeEffect(player)
         } else {
             sendJump(player)
-            action(jumpItem) // ★ イベント固有の処理を実行！
-            playJumpEffect(player, jumpItem)
+            action(jumpItem)
+            jumpItem.playJumpEffect(player)
         }
     }
 
     private fun sendJump(player: Player) {
         val message = messageManager.get(MessageKey.JUMP_MESSAGE)
-        player.sendActionBar(message)
-    }
-
-    private fun playJumpEffect(player: Player, jumpBoots: JumpBoots) {
-        val world = player.world
-        val location = player.location
-        val particle = jumpBoots.particle
-        val particleCount = jumpBoots.particleCount
-        val sound = jumpBoots.sound
-        val volume = jumpBoots.soundVolume
-        val pitch = jumpBoots.soundPitch
-        world.spawnParticle(particle, location, particleCount, 0.2, 0.1, 0.2, 0.05)
-        player.playSound(player, sound, volume, pitch)
-    }
-
-    private fun playChargeEffect(player: Player, chargeBoots: ChargeBoots) {
-        val sound = chargeBoots.chargeSound
-        val volume = chargeBoots.chargeSoundVolume
-        val pitch = chargeBoots.chargeSoundPitch
-        player.playSound(player, sound, volume, pitch)
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
     }
 
     private fun sendRecharged(player: Player) {
