@@ -70,6 +70,8 @@ class TNTJump(private val plugin: Plugin, private val messageManager: MessageMan
                 if (player.isOnline) {
                     // 水平速度をリセットして真上に強く吹き飛ばす
                     player.velocity = player.velocity.setX(0.0).setZ(0.0).setY(2.0)
+                    sendJumpSuccess(player, messageManager)
+                    playJumpEffect(player)
                 }
             }
         )

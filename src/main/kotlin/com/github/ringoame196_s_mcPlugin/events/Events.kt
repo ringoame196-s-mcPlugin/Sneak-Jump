@@ -68,9 +68,7 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
             return
         }
 
-        jumpItem.sendJumpSuccess(player, messageManager)
         action(jumpItem)
-        jumpItem.playJumpEffect(player)
     }
 
     private fun sendRecharged(player: Player) {

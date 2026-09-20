@@ -24,8 +24,8 @@ class Main : JavaPlugin() {
 
         val jumpItems =
             listOf(
-                DoubleJump(plugin),
-                SneakJump(plugin),
+                DoubleJump(plugin, messageManager),
+                SneakJump(plugin, messageManager),
                 TNTJump(plugin, messageManager)
             )
 

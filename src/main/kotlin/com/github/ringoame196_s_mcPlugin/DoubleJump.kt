@@ -1,5 +1,6 @@
 package com.github.ringoame196_s_mcPlugin
 
+import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -12,7 +13,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
 import org.bukkit.plugin.Plugin
 
-class DoubleJump(plugin: Plugin) : ToggleSneak, JumpBoots {
+class DoubleJump(plugin: Plugin, private val messageManager: MessageManager) : ToggleSneak, JumpBoots {
     override val id: String = "double_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val bootsColor: Color = Color.WHITE
@@ -41,6 +42,8 @@ class DoubleJump(plugin: Plugin) : ToggleSneak, JumpBoots {
     ) {
         player.jump()
         DoubleJumpManager.setJumped(player, true)
+        sendJumpSuccess(player, messageManager)
+        playJumpEffect(player)
     }
 
     private fun createRecipe(plugin: Plugin): CraftingRecipe {
