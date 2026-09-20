@@ -97,6 +97,7 @@ class TNTJump(private val plugin: Plugin, private val messageManager: MessageMan
         } else {
             sendBoostMessage(player)
         }
+        playChargeEffect(player)
     }
 
     private fun reset(player: Player) {
@@ -117,6 +118,13 @@ class TNTJump(private val plugin: Plugin, private val messageManager: MessageMan
 
         val message = "${ChatColor.RED}${ChatColor.BOLD}TNT CHARGE ${ChatColor.GRAY}[${ChatColor.RED}$filled${ChatColor.DARK_GRAY}$empty${ChatColor.GRAY}] ${ChatColor.GOLD}$count${ChatColor.WHITE}/$actionCount"
         player.sendActionBar(message)
+    }
+
+    private fun playChargeEffect(player: Player) {
+        val sound = Sound.ENTITY_CREEPER_PRIMED
+        val volume = 1.0f
+        val pitch = 1.0f
+        player.playSound(player, sound, volume, pitch)
     }
 
     private fun sendBoostMessage(player: Player) {
