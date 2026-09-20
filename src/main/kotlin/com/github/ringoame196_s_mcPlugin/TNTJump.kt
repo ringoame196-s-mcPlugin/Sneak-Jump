@@ -1,6 +1,9 @@
 package com.github.ringoame196_s_mcPlugin
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent
+import com.github.ringoame196_s_mcPlugin.message.MessageKey
+import com.github.ringoame196_s_mcPlugin.message.MessageManager
+import org.bukkit.ChatColor
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -15,7 +18,7 @@ import org.bukkit.inventory.ShapelessRecipe
 import org.bukkit.plugin.Plugin
 import java.util.UUID
 
-class TNTJump(private val plugin: Plugin) : ToggleSneak, JumpBoots, PlayerJump {
+class TNTJump(private val plugin: Plugin, private val messageManager: MessageManager) : ToggleSneak, JumpBoots, PlayerJump {
     override val id: String = "tnt_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val bootsColor: Color = Color.RED
@@ -45,6 +48,10 @@ class TNTJump(private val plugin: Plugin) : ToggleSneak, JumpBoots, PlayerJump {
             is PlayerJumpEvent -> getChargeCount(player) < actionCount
             else -> false
         }
+    }
+
+    override fun cancel(player: Player) {
+        reset(player)
     }
 
     override fun onToggleSneak(player: Player) {
@@ -79,10 +86,14 @@ class TNTJump(private val plugin: Plugin) : ToggleSneak, JumpBoots, PlayerJump {
 
     private fun charge(player: Player) {
         val current = getChargeCount(player)
-        // 上限（actionCount = 5）を超えないように強制制限
         if (current < actionCount) {
             jumpCountMap[player.uniqueId] = current + 1
+        }
+
+        if (getChargeCount(player) < actionCount) {
             sendChargeMessage(player)
+        } else {
+            sendBoostMessage(player)
         }
     }
 
@@ -95,7 +106,19 @@ class TNTJump(private val plugin: Plugin) : ToggleSneak, JumpBoots, PlayerJump {
     }
 
     private fun sendChargeMessage(player: Player) {
-        val c = getChargeCount(player)
-        player.sendActionBar("$c/$actionCount")
+        val count = getChargeCount(player)
+
+        // チャージ進行状況に合わせて視覚的なゲージを作成
+        val symbol = "■"
+        val filled = symbol.repeat(count)
+        val empty = symbol.repeat(actionCount - count)
+
+        val message = "${ChatColor.RED}${ChatColor.BOLD}TNT CHARGE ${ChatColor.GRAY}[${ChatColor.RED}$filled${ChatColor.DARK_GRAY}$empty${ChatColor.GRAY}] ${ChatColor.GOLD}$count${ChatColor.WHITE}/$actionCount"
+        player.sendActionBar(message)
+    }
+
+    private fun sendBoostMessage(player: Player) {
+        val message = messageManager.get(MessageKey.TNT_JUMP_CHARGED_MESSAGE)
+        player.sendActionBar(message)
     }
 }
