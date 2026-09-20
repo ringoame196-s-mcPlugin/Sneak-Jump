@@ -17,6 +17,7 @@ class SneakJump(plugin: Plugin, private val messageManager: MessageManager) : Sn
     override val id: String = "sneak_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val bootsColor: Color = Color.BLUE
+    override val durabilityCost = 1
     override val item: ItemStack by lazy { JumpItemManager.createBoots(this) }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
     override val jumpParticle = Particle.SWEEP_ATTACK
@@ -35,6 +36,7 @@ class SneakJump(plugin: Plugin, private val messageManager: MessageManager) : Sn
         player: Player,
     ) {
         player.jump(1.2)
+        reduceDurability(player)
         sendJumpSuccess(player, messageManager)
         playJumpEffect(player)
     }

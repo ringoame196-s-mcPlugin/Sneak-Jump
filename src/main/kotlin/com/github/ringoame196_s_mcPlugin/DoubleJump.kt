@@ -17,6 +17,7 @@ class DoubleJump(plugin: Plugin, private val messageManager: MessageManager) : T
     override val id: String = "double_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
     override val bootsColor: Color = Color.WHITE
+    override val durabilityCost = 0
     override val item: ItemStack by lazy { JumpItemManager.createBoots(this) }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
     override val jumpParticle = Particle.CLOUD
@@ -41,6 +42,7 @@ class DoubleJump(plugin: Plugin, private val messageManager: MessageManager) : T
         player: Player,
     ) {
         player.jump()
+        reduceDurability(player)
         DoubleJumpManager.setJumped(player, true)
         sendJumpSuccess(player, messageManager)
         playJumpEffect(player)
