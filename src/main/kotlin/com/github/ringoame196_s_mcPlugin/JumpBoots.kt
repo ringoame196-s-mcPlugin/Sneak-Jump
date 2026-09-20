@@ -11,13 +11,13 @@ import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
 interface JumpBoots : JumpItem {
-    val color: Color
-    val particle: Particle
-    val particleCount: Int get() = 15
+    val bootsColor: Color
+    val jumpParticle: Particle
+    val jumpParticleCount: Int get() = 15
 
-    val sound: Sound
-    val soundVolume: Float get() = 1.0f
-    val soundPitch: Float get() = 1.0f
+    val jumpSound: Sound
+    val jumpSoundVolume: Float get() = 1.0f
+    val jumpSoundPitch: Float get() = 1.0f
 
     fun jump(
         player: Player
@@ -26,11 +26,11 @@ interface JumpBoots : JumpItem {
     fun playJumpEffect(player: Player) {
         val world = player.world
         val location = player.location
-        val particle = this.particle
-        val particleCount = this.particleCount
-        val sound = this.sound
-        val volume = this.soundVolume
-        val pitch = this.soundPitch
+        val particle = this.jumpParticle
+        val particleCount = this.jumpParticleCount
+        val sound = this.jumpSound
+        val volume = this.jumpSoundVolume
+        val pitch = this.jumpSoundPitch
         world.spawnParticle(particle, location, particleCount, 0.2, 0.1, 0.2, 0.05)
         player.playSound(player, sound, volume, pitch)
     }

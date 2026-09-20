@@ -18,12 +18,12 @@ import java.util.UUID
 class TNTJump(private val plugin: Plugin) : ToggleSneak, JumpBoots, PlayerJump {
     override val id: String = "tnt_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS
-    override val color: Color = Color.RED
+    override val bootsColor: Color = Color.RED
     override val item: ItemStack by lazy { JumpItemManager.createBoots(this) }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
-    override val particle = Particle.CLOUD
-    override val sound = Sound.ENTITY_GENERIC_EXPLODE
-    override val soundPitch = 1.5f
+    override val jumpParticle = Particle.CLOUD
+    override val jumpSound = Sound.ENTITY_GENERIC_EXPLODE
+    override val jumpSoundPitch = 1.5f
     private val actionCount = 5
 
     companion object {
