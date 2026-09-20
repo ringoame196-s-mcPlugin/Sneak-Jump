@@ -20,21 +20,21 @@ class Main : JavaPlugin() {
         saveDefaultConfig()
         val configManager = ConfigManager(plugin.config)
         JumpItemManager.configManager = configManager
+        val messageManager = MessageManager(plugin)
 
         val jumpItems =
             listOf(
-                DoubleJump(plugin),
-                SneakJump(plugin),
-                TNTJump(plugin)
+                DoubleJump(plugin, messageManager),
+                SneakJump(plugin, messageManager),
+                TNTJump(plugin, messageManager)
             )
 
-        registerEvents(jumpItems)
+        registerEvents(jumpItems, messageManager)
         registerCommands(jumpItems)
         registerRecipes(jumpItems, configManager)
     }
 
-    private fun registerEvents(jumpItems: List<JumpItem>) {
-        val messageManager = MessageManager(plugin)
+    private fun registerEvents(jumpItems: List<JumpItem>, messageManager: MessageManager) {
         val sneakHoldDetector = SneakHoldDetector(plugin, 10L)
         server.pluginManager.registerEvents(Events(jumpItems, messageManager), plugin)
         server.pluginManager.registerEvents(sneakHoldDetector, this)

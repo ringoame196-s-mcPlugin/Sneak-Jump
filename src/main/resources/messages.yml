@@ -1,3 +1,4 @@
 no-can-jump-message: "&cCan't jump."
 jump-message : "§aJumping!!"
 jump-recharged-message : "§eJump Recharged!"
+tnt_jump_charged_message : "&c&lTNT Charged! &f(Sneak + Jump to launch)"

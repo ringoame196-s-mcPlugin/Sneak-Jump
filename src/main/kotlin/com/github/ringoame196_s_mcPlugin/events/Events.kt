@@ -15,7 +15,6 @@ import com.github.ringoame196_s_mcPlugin.message.MessageKey
 import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
-import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
@@ -64,30 +63,17 @@ class Events(jumpItems: List<JumpItem>, private val messageManager: MessageManag
         if (!jumpItem.isAction(player, e)) return
 
         if (jumpItem.isCancel(player) || jumpItem.isCancel(player, e)) {
-            sendCancelJump(player)
+            jumpItem.sendJumpCancel(player, messageManager)
+            jumpItem.cancel(player)
             return
         }
 
-        sendJump(player)
         action(jumpItem)
-        jumpItem.playJumpEffect(player)
-    }
-
-    private fun sendJump(player: Player) {
-        val message = messageManager.get(MessageKey.JUMP_MESSAGE)
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
     }
 
     private fun sendRecharged(player: Player) {
         val message = messageManager.get(MessageKey.JUMP_RECHARGED_MESSAGE)
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
-    }
-
-    private fun sendCancelJump(player: Player) {
-        val message = messageManager.get(MessageKey.NO_CAN_JUMP_MESSAGE)
-        val sound = Sound.BLOCK_NOTE_BLOCK_BELL
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(message))
-        player.playSound(player, sound, 1f, 1f)
     }
 
     @EventHandler

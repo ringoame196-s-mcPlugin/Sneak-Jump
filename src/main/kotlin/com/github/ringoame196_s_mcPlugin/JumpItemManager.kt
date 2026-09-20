@@ -11,7 +11,7 @@ object JumpItemManager {
         val meta = item.itemMeta as LeatherArmorMeta
         val displayName = configManager.getDisplayName(jumpItem.id)
         meta.setDisplayName(displayName)
-        meta.setColor(jumpItem.color)
+        meta.setColor(jumpItem.bootsColor)
         meta.jump.id = jumpItem.id
         item.setItemMeta(meta)
         return item
