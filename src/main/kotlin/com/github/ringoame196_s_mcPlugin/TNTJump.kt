@@ -24,6 +24,7 @@ class TNTJump(private val plugin: Plugin, private val messageManager: MessageMan
     override val bootsColor: Color = Color.RED
     override val item: ItemStack by lazy { JumpItemManager.createBoots(this) }
     override val recipe: CraftingRecipe by lazy { createRecipe(plugin) }
+    override val durabilityCost = 5
     override val jumpParticle = Particle.CLOUD
     override val jumpSound = Sound.ENTITY_GENERIC_EXPLODE
     override val jumpSoundPitch = 1.5f
@@ -70,6 +71,7 @@ class TNTJump(private val plugin: Plugin, private val messageManager: MessageMan
                 if (player.isOnline) {
                     // 水平速度をリセットして真上に強く吹き飛ばす
                     player.velocity = player.velocity.setX(0.0).setZ(0.0).setY(2.0)
+                    reduceDurability(player)
                     sendJumpSuccess(player, messageManager)
                     playJumpEffect(player)
                 }
