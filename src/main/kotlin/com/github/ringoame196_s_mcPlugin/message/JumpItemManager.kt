@@ -1,5 +1,7 @@
-package com.github.ringoame196_s_mcPlugin
+package com.github.ringoame196_s_mcPlugin.message
 
+import com.github.ringoame196_s_mcPlugin.extensions.jump
+import com.github.ringoame196_s_mcPlugin.item.JumpBoots
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 

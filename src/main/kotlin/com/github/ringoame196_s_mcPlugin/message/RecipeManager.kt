@@ -1,5 +1,6 @@
-package com.github.ringoame196_s_mcPlugin
+package com.github.ringoame196_s_mcPlugin.message
 
+import com.github.ringoame196_s_mcPlugin.item.JumpItem
 import org.bukkit.Bukkit
 
 object RecipeManager {
