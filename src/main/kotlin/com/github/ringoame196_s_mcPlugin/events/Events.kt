@@ -2,15 +2,15 @@ package com.github.ringoame196_s_mcPlugin.events
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent
 import com.github.ringoame196_s_mcPlugin.boots_event.BootsEvent
-import com.github.ringoame196_s_mcPlugin.message.DoubleJumpManager
-import com.github.ringoame196_s_mcPlugin.item.JumpBoots
-import com.github.ringoame196_s_mcPlugin.item.JumpItem
 import com.github.ringoame196_s_mcPlugin.boots_event.PlayerJump
-import com.github.ringoame196_s_mcPlugin.custom_event.PlayerSneakHoldEvent
 import com.github.ringoame196_s_mcPlugin.boots_event.SneakHold
 import com.github.ringoame196_s_mcPlugin.boots_event.ToggleSneak
+import com.github.ringoame196_s_mcPlugin.custom_event.PlayerSneakHoldEvent
 import com.github.ringoame196_s_mcPlugin.extensions.isGrounded
 import com.github.ringoame196_s_mcPlugin.extensions.jump
+import com.github.ringoame196_s_mcPlugin.item.JumpBoots
+import com.github.ringoame196_s_mcPlugin.item.JumpItem
+import com.github.ringoame196_s_mcPlugin.message.DoubleJumpManager
 import com.github.ringoame196_s_mcPlugin.message.MessageKey
 import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import net.md_5.bungee.api.ChatMessageType

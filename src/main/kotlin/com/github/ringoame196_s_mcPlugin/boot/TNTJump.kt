@@ -1,10 +1,10 @@
 package com.github.ringoame196_s_mcPlugin.boot
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent
-import com.github.ringoame196_s_mcPlugin.item.JumpBoots
-import com.github.ringoame196_s_mcPlugin.message.JumpItemManager
 import com.github.ringoame196_s_mcPlugin.boots_event.PlayerJump
 import com.github.ringoame196_s_mcPlugin.boots_event.ToggleSneak
+import com.github.ringoame196_s_mcPlugin.item.JumpBoots
+import com.github.ringoame196_s_mcPlugin.message.JumpItemManager
 import com.github.ringoame196_s_mcPlugin.message.MessageKey
 import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import org.bukkit.Bukkit
@@ -23,7 +23,9 @@ import org.bukkit.inventory.ShapelessRecipe
 import org.bukkit.plugin.Plugin
 import java.util.UUID
 
-class TNTJump(private val plugin: Plugin, private val messageManager: MessageManager) : ToggleSneak, JumpBoots,
+class TNTJump(private val plugin: Plugin, private val messageManager: MessageManager) :
+    ToggleSneak,
+    JumpBoots,
     PlayerJump {
     override val id: String = "tnt_jump_boots"
     override val material: Material = Material.LEATHER_BOOTS

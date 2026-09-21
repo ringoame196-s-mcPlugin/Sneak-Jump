@@ -1,10 +1,10 @@
 package com.github.ringoame196_s_mcPlugin.boot
 
-import com.github.ringoame196_s_mcPlugin.item.JumpBoots
-import com.github.ringoame196_s_mcPlugin.message.JumpItemManager
 import com.github.ringoame196_s_mcPlugin.boots_event.SneakHold
 import com.github.ringoame196_s_mcPlugin.extensions.isGrounded
 import com.github.ringoame196_s_mcPlugin.extensions.jump
+import com.github.ringoame196_s_mcPlugin.item.JumpBoots
+import com.github.ringoame196_s_mcPlugin.message.JumpItemManager
 import com.github.ringoame196_s_mcPlugin.message.MessageManager
 import org.bukkit.Color
 import org.bukkit.Material
