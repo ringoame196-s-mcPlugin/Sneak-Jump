@@ -17,8 +17,10 @@ Minecraft (Paper/Spigot) 向けの特殊効果付きブーツ追加プラグイ�
 空中でもう一度ジャンプを行うことができるベーシックなブーツです。移動や高所への登頂がスムーズになります。
 
 * **耐久消費:** `0` (無制限)
-* **プレビュー:** ![Double Jump](imgs/double_jump.gif)
-* **クラフトレシピ:** ![Double Jump Recipe](imgs/double_jump_recipe.png)
+
+| プレビュー | クラフトレシピ |
+| :---: | :---: |
+| <img src="imgs/double_jump.gif" width="350"> | <img src="imgs/double_jump_recipe.png" width="280"> |
 
 ---
 
@@ -26,8 +28,10 @@ Minecraft (Paper/Spigot) 向けの特殊効果付きブーツ追加プラグイ�
 スニークを入力することで少し高く跳び上がることができるブーツです。
 
 * **耐久消費:** `1`
-* **プレビュー:** ![Sneak Jump](imgs/sneak_jump.gif)
-* **クラフトレシピ:** ![Sneak Jump Recipe](imgs/sneak_jump_recipe.png)
+
+| プレビュー | クラフトレシピ |
+| :---: | :---: |
+| <img src="imgs/sneak_jump.gif" width="350"> | <img src="imgs/sneak_jump_recipe.png" width="280"> |
 
 ---
 
@@ -36,8 +40,10 @@ Minecraft (Paper/Spigot) 向けの特殊効果付きブーツ追加プラグイ�
 
 * **操作方法:** スニーク連打（最大5チャージ） ➔ ジャンプで発射
 * **耐久消費:** `5` (革のブーツ1足につき13回使用可能)
-* **プレビュー:** ![TNT Jump](imgs/tnt_jump.gif)
-* **クラフトレシピ:** ![TNT Jump Recipe](imgs/tnt_jump_recipe.png)
+
+| プレビュー | クラフトレシピ |
+| :---: | :---: |
+| <img src="imgs/tnt_jump.gif" width="350"> | <img src="imgs/tnt_jump_recipe.png" width="280"> |
 
 ---
 

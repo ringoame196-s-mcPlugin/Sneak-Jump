@@ -17,8 +17,10 @@ It provides various aerial actions suited to your playstyle, such as double jump
 A basic pair of boots that allows you to perform an extra jump in mid-air. Ideal for smooth navigation and climbing high terrain.
 
 * **Durability Cost:** `0` (Infinite uses)
-* **Preview:** ![Double Jump](imgs/double_jump.gif)
-* **Crafting Recipe:** ![Double Jump Recipe](imgs/double_jump_recipe.png)
+
+| Preview | Crafting Recipe |
+| :---: | :---: |
+| <img src="imgs/double_jump.gif" width="350"> | <img src="imgs/double_jump_recipe.png" width="280"> |
 
 ---
 
@@ -26,8 +28,10 @@ A basic pair of boots that allows you to perform an extra jump in mid-air. Ideal
 Boots that allow you to jump slightly higher by sneaking.
 
 * **Durability Cost:** `1`
-* **Preview:** ![Sneak Jump](imgs/sneak_jump.gif)
-* **Crafting Recipe:** ![Sneak Jump Recipe](imgs/sneak_jump_recipe.png)
+
+| Preview | Crafting Recipe |
+| :---: | :---: |
+| <img src="imgs/sneak_jump.gif" width="350"> | <img src="imgs/sneak_jump_recipe.png" width="280"> |
 
 ---
 
@@ -36,8 +40,10 @@ A high-powered pair of boots that charges TNT energy by tapping sneak repeatedly
 
 * **How to Use:** Tap Sneak repeatedly (Up to 5 charges) ➔ Jump to launch
 * **Durability Cost:** `5` (13 uses per leather boots)
-* **Preview:** ![TNT Jump](imgs/tnt_jump.gif)
-* **Crafting Recipe:** ![TNT Jump Recipe](imgs/tnt_jump_recipe.png)
+
+| Preview | Crafting Recipe |
+| :---: | :---: |
+| <img src="imgs/tnt_jump.gif" width="350"> | <img src="imgs/tnt_jump_recipe.png" width="280"> |
 
 ---
 
