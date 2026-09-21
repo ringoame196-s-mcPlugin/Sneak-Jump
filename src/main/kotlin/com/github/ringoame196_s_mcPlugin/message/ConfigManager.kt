@@ -1,4 +1,4 @@
-package com.github.ringoame196_s_mcPlugin
+package com.github.ringoame196_s_mcPlugin.message
 
 import org.bukkit.ChatColor
 import org.bukkit.configuration.file.FileConfiguration

@@ -1,9 +1,9 @@
-package com.github.ringoame196_s_mcPlugin
+package com.github.ringoame196_s_mcPlugin.message
 
+import com.github.ringoame196_s_mcPlugin.Main
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
-import kotlin.getValue
 
 object DoubleJumpManager {
     private val key by lazy { NamespacedKey(Main.plugin, "has_double_jumped") }

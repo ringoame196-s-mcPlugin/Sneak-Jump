@@ -1,6 +1,6 @@
 package com.github.ringoame196_s_mcPlugin.events
 
-import com.github.ringoame196_s_mcPlugin.PlayerSneakHoldEvent
+import com.github.ringoame196_s_mcPlugin.custom_event.PlayerSneakHoldEvent
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

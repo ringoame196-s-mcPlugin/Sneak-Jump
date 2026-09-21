@@ -1,9 +1,16 @@
 package com.github.ringoame196_s_mcPlugin
 
+import com.github.ringoame196_s_mcPlugin.boot.DoubleJump
+import com.github.ringoame196_s_mcPlugin.boot.SneakJump
+import com.github.ringoame196_s_mcPlugin.boot.TNTJump
 import com.github.ringoame196_s_mcPlugin.commands.Command
 import com.github.ringoame196_s_mcPlugin.events.Events
 import com.github.ringoame196_s_mcPlugin.events.SneakHoldDetector
+import com.github.ringoame196_s_mcPlugin.message.JumpItemManager
+import com.github.ringoame196_s_mcPlugin.item.JumpItem
+import com.github.ringoame196_s_mcPlugin.message.ConfigManager
 import com.github.ringoame196_s_mcPlugin.message.MessageManager
+import com.github.ringoame196_s_mcPlugin.message.RecipeManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
